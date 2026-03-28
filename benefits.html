@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>Bitfire VIP权益</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#f0f0f0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
+.hdr{text-align:center;padding:24px 16px 12px}.hdr h1{font-size:20px;font-weight:700;background:linear-gradient(135deg,#D4AF37,#F0D890,#C9A96E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}.hdr .sub{color:#666;font-size:11px;margin-top:4px}.deco{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0}.deco span{height:1px;width:50px;background:linear-gradient(90deg,transparent,#C9A96E,transparent)}.deco i{color:#C9A96E;font-size:8px;font-style:normal}
+.filters{display:flex;gap:6px;padding:0 12px 12px;align-items:center}.filters input,.filters select{background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:8px 10px;border-radius:8px;font-size:13px;outline:none;transition:border .2s;height:38px}.filters input:focus,.filters select:focus{border-color:#C9A96E}.filters input{flex:2;min-width:0}.filters select{flex:1;min-width:0}select option{background:#1a1a1a}
+.sec-t{display:flex;align-items:center;gap:8px;padding:16px 12px 10px;font-size:15px;font-weight:600;color:#C9A96E}.sec-t::before,.sec-t::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.3),transparent)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 12px}
+.gc{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:transform .2s}.gc:active{transform:scale(.97)}
+.gc .bg{position:absolute;inset:0;z-index:0;border-radius:12px}
+.gc .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.7) 100%);z-index:1;border-radius:12px}
+.gc .txt{position:relative;z-index:2}.gc .gn{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}.gc .gs{font-size:11px;color:rgba(255,255,255,.7)}
+.gc .emoji-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-65%);font-size:36px;z-index:1;opacity:.9}
+.no-r{text-align:center;padding:50px 20px;color:#555}.no-r .ic{font-size:40px;margin-bottom:10px}
+.dtl{position:fixed;inset:0;background:#0a0a0a;z-index:100;overflow-y:auto;transform:translateX(100%);transition:transform .3s;padding-bottom:60px}.dtl.show{transform:translateX(0)}
+.d-back{display:flex;align-items:center;gap:6px;padding:14px 16px;color:#C9A96E;font-size:14px;cursor:pointer}.d-back svg{width:18px;height:18px;fill:#C9A96E}
+.d-tabs{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 16px 12px;scrollbar-width:none}.d-tabs::-webkit-scrollbar{display:none}.d-tab{flex-shrink:0;padding:6px 14px;font-size:12px;color:#666;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .2s}.d-tab.act{color:#C9A96E;border-bottom-color:#C9A96E}
+.d-hdr{padding:0 20px 12px}.d-hdr h2{font-size:22px;font-weight:700;color:#D4AF37}.d-hdr .ds{color:#999;font-size:13px;margin-top:4px;line-height:1.5}
+.d-lvl{display:flex;gap:8px;padding:0 20px;margin-bottom:16px}.lb{font-size:12px;padding:4px 12px;border-radius:20px;background:transparent;border:1px solid rgba(201,169,110,.4);color:#C9A96E}.lb.n{border-color:rgba(100,100,100,.3);color:#555;text-decoration:line-through}
+.d-img{margin:0 16px 16px;border-radius:14px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative}.d-img img{width:100%;height:100%;object-fit:cover}.d-img .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px}
+.d-sec{padding:0 16px}.d-sec-title{font-size:14px;font-weight:600;color:#C9A96E;margin-bottom:12px;padding-left:2px}
+.d-flds{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;margin-bottom:16px}
+.df{padding:12px 16px;border-bottom:1px solid #222;display:flex;align-items:flex-start;gap:8px}.df:last-child{border-bottom:none}.df .dl{font-size:13px;color:#C9A96E;flex-shrink:0;white-space:nowrap;line-height:1.6}.df .dv{font-size:13px;color:#f0f0f0;line-height:1.6;white-space:pre-line}
+.gbtn{position:fixed;bottom:0;left:0;right:0;margin:0;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;cursor:pointer;letter-spacing:1px;padding-bottom:calc(14px + env(safe-area-inset-bottom));z-index:101}.gbtn:active{opacity:.8}
+.imod{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;padding:20px}.imod.show{display:flex}.imod img{max-width:100%;max-height:65vh;border-radius:10px}.imod .cb{margin-top:14px;padding:10px 28px;background:linear-gradient(135deg,#8B7340,#D4B96A);color:#000;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}.imod .st{color:#666;font-size:11px;margin-top:8px}
+.ctpl{position:fixed;left:-9999px;top:0;width:375px;background:#0a0a0a;padding:20px 16px;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.ctpl .d-hdr h2{font-size:22px;font-weight:700;color:#D4AF37;background:none;-webkit-background-clip:unset;-webkit-text-fill-color:#D4AF37}
+.ctpl .d-hdr .ds{color:#999;font-size:13px;margin-top:4px;line-height:1.5}
+.ctpl .d-lvl{display:flex;gap:8px;padding:0;margin-bottom:16px}
+.ctpl .lb{font-size:12px;padding:4px 12px;border-radius:20px;background:transparent;border:1px solid rgba(201,169,110,.4);color:#C9A96E}.ctpl .lb.n{border-color:rgba(100,100,100,.3);color:#555;text-decoration:line-through}
+.ctpl .d-img{margin:0 0 16px;border-radius:14px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.ctpl .d-img .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px}
+.ctpl .d-sec{padding:0}.ctpl .d-sec-title{font-size:14px;font-weight:600;color:#C9A96E;margin-bottom:12px}
+.ctpl .d-flds{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden}
+.ctpl .df{padding:12px 16px;border-bottom:1px solid #222;display:flex;align-items:flex-start;gap:8px}.ctpl .df:last-child{border-bottom:none}.ctpl .df .dl{font-size:13px;color:#C9A96E;flex-shrink:0;white-space:nowrap;line-height:1.6}.ctpl .df .dv{font-size:13px;color:#f0f0f0;line-height:1.6;white-space:pre-line}
+.ld{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;align-items:center;justify-content:center;color:#C9A96E;font-size:15px}.ld.show{display:flex}
+</style></head><body>
+<div id="lp">
+<div class="hdr"><h1>Bitfire VIP权益</h1><div class="sub">Private Banking · 管家权益查询工具</div><div class="deco"><span></span><i>◆</i><span></span></div></div>
+<div class="filters"><input type="text" id="sq" placeholder="🔍 搜索权益"><select id="ft"><option value="">全部类型</option><option>尊享礼遇</option><option>私享会</option><option>顶奢特权</option></select><select id="fl"><option value="">全部等级</option><option>金卡</option><option>铂金卡</option><option>黑卡</option></select></div>
+<div id="bl"></div>
+</div>
+<div class="dtl" id="dp"><div class="d-back" onclick="hd()"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>返回</div><div id="dtabs" class="d-tabs"></div><div id="dc"></div></div>
+<button class="gbtn" id="genBtn" style="display:none" onclick="gc(window._ci)">生成权益卡片</button>
+<div class="imod" id="im"><img id="gi" src=""><button class="cb" onclick="ci()">关闭</button><div class="st">长按图片保存到相册</div></div>
+<div class="ctpl" id="ct"></div>
+<div class="ld" id="ld">生成中...</div>
+<script>
+var E=[
+["VIP定制卡","可定制专属靓号","尊享礼遇","实体VIP卡片，李林先生亲笔签名","一卡一签，承载远见。李林亲笔签名，见证您的专属席位。","客户找管家登记领取","线上","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"💳"],
+["深度市场洞察","洞察市场先机","尊享礼遇","每周获取新火研究院VIP投研报告","每周一份前沿投研，助您洞察先机，稳健布局。","开户成功后定期邮件发送：\n1.新火研判周报/月报\n2.新火专题报告\n3.行业内参","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📊"],
+["VIP专属礼遇","专属礼品送不停","尊享礼遇","VIP客户专属欢迎礼包，专属定制生日礼遇","从欢迎礼包到生日惊喜，您的每一个重要时刻，都有新火用心相伴。","开户成功后3个月内邮寄至客户地址","邮寄","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"🎁"],
+["1V1专属管家","7*24h随时响应","尊享礼遇","1v1专属管家开户服务，7*24小时答疑协助","您的专属财富导航员，随时应答您的每一刻所需。","开户成功即拥有专属管家","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"👤"],
+["跨资产投资组合","定制化投资策略","尊享礼遇","从币市到股市再到大宗商品，量身定制投资策略","跨越币市、股市、大宗商品等，定制只属于您的财富方舟。","开户成功即享专属管家定制化投资策略指导一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📈"],
+["顶级IPO基石份额","抢滩巨头IPO舱位","尊享礼遇","顶尖金融科技公司新股优先认购权","抢滩未来巨头，坐拥一级市场稀缺舱位。","VIP会员有效期内可参与每一期顶尖项目份额认购，需找管家登记","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🚀"],
+["数字资产传承","锁定家族财富","尊享礼遇","首创数字资产信托，全方位财富传承与保护方案","首创数字资产信托，为下一代守住这一代的财富","VIP会员有效期内尊享数字资产传承规划一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🏛️"],
+["新火OG分享会","对话传奇大佬","尊享礼遇","特邀行业领袖/OG进行线上独家分享","与行业传奇OG面对面，先人一步捕获Alpha投资密码。","VIP会员有效期内可受邀参加每一期新火OG分享会","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎙️"],
+["新火峰会VIP席位","尊享VIP嘉宾席位","尊享礼遇","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP会员有效期内即可向管家领取VIP门票","线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎫"],
+["新火游艇会","乘风破浪，共赴蓝海","私享会","VIP定向邀请线下活动，游艇Party","乘风破浪，亦是谈笑风生。定向邀请，仅限同频者共航。","每年可受邀参加一次游艇会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","是","否",1,1,1,"🛥️"],
+["新火高尔夫","挥杆之间，尽在掌握","私享会","VIP定向邀请线下活动，高尔夫运动","以杆会友，以诚致远。新火邀您，在开阔之地，论开阔之事。","每年可受邀参加一次高尔夫活动","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","是","否",1,1,1,"⛳"],
+["七爷红酒会","七爷相邀，红酒人生","私享会","VIP红酒会，新火科技CEO翁晓奇先生亲临现场","醇酿有价，远见无价。与新火科技CEO共饮，话数字财富新篇章。","每年可受邀参加一次七爷红酒会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",0,1,1,"🍷"],
+["康蒂之夜·李林私享","饮康蒂之醇，谋时代之局","私享会","康帝之夜，新火科技董事会主席李林先生亲临现场","饮康蒂之醇，谋时代之局。与李林先生共鉴顶级佳酿，共话资产布局。","每年可受邀参加一次李林康帝品酒会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",0,0,1,"🥂"],
+["顶流演唱会门票折扣","近距离邂逅星光","顶奢特权","沉浸式体验顶流明星演唱会","财富入场券，亦是星光通行证。新火VIP，从此与世界顶流同频。","会员有效期内可享受两次七折购买明星演唱会优惠","线下","开户成功","开户成功","按日期生效","会员过期即失效","是","否",1,1,1,"🎵"],
+["豪车礼遇","四季尊享豪车","顶奢特权","豪华座驾出行畅享，VIP全程礼遇","四季流转，座驾随行。每个季度，一次非凡旅程的专属开启。","每季度可享受一次豪车礼遇，需找管家登记，仅限香港","仅限香港线下","开户成功","开户成功","按日期生效","会员过期即失效","是","否",0,1,1,"🏎️","img/car_grid.jpg","img/car_detail.jpg"],
+["精英深造","香港顶尖学府","顶奢特权","香港顶尖大学推荐信，助力事业进阶","财富之上，是智慧传承。新火为您开启香港顶尖学府进阶之门。","会员有效期内可享受一次推荐机会","线上","开户成功","开户成功","按日期生效","会员过期即失效","否","否",1,1,1,"🎓"],
+["顶级会所会籍推荐","跻身名流圈层","顶奢特权","尊享香港顶级会所会籍推荐及专属折扣","圈层无形，入场有券。跻身香港顶级名流交际场。","会员有效期内可享受一次推荐机会","线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🏰"],
+["高端社交活动","品鉴艺术雅韵","顶奢特权","赛马会、画廊、艺术品鉴赏等高端社交互动","赛马会、画廊、艺术品鉴赏等高端社交互动","会员有效期内一次免费使用机会","仅限香港线下","开户成功","开户成功","按日期生效","会员过期即失效","否","否",0,1,1,"🎨"],
+["下一代精英计划","助力雏鹰展翅","顶奢特权","为VIP客户子女提供香港顶级上市公司内推与实习机会","不只托管资产，更托举未来。助力雏鹰展翅。","会员有效期内可享受一次推荐机会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",0,0,1,"👨‍🎓"]
+];
+var GR=["#2a1f0f,#1a1510","#0f1a2a,#101520","#1a0f2a,#151020","#0f2a1a,#102015","#2a0f1a,#201015","#1a2a0f,#152010","#2a1a0f,#201510","#0f2a2a,#102020","#1f0f2a,#151020"];
+function gk(i){var c=GR[i%GR.length].split(",");return"linear-gradient(135deg,"+c[0]+","+c[1]+")"}
+function D(a){return{name:a[0],sub:a[1],type:a[2],intro:a[3],hl:a[4],rule:a[5],cond:a[6],obtain:a[7],effDate:a[8],effRule:a[9],validity:a[10],supplier:a[11],delivery:a[12],gold:a[13],plat:a[14],black:a[15],emoji:a[16],img:a[17]||"",imgD:a[18]||a[17]||""}}
+var sq=document.getElementById("sq"),ft=document.getElementById("ft"),fl=document.getElementById("fl");
+sq.addEventListener("input",R);ft.addEventListener("change",R);fl.addEventListener("change",R);
+function R(){
+var q=sq.value.trim().toLowerCase(),t=ft.value,l=fl.value;
+var f=E.map(function(a,i){var d=D(a);d._i=i;return d}).filter(function(d){
+if(t&&d.type!==t)return false;
+if(l==="金卡"&&!d.gold)return false;
+if(l==="铂金卡"&&!d.plat)return false;
+if(l==="黑卡"&&!d.black)return false;
+if(q&&d.name.toLowerCase().indexOf(q)<0&&d.sub.toLowerCase().indexOf(q)<0)return false;
+return true;
+});
+var c=document.getElementById("bl");
+if(!f.length){c.innerHTML='<div class="no-r"><div class="ic">🔍</div>没有找到匹配的权益</div>';return}
+var g={};f.forEach(function(d){if(!g[d.type])g[d.type]=[];g[d.type].push(d)});
+var h="";
+["私享会","顶奢特权","尊享礼遇"].forEach(function(tp){
+if(!g[tp])return;
+h+='<div class="sec-t">'+tp+'</div><div class="grid">';
+g[tp].forEach(function(d){
+var bgStyle=d.img?'background-image:url('+d.img+');background-size:cover;background-position:center':'background:'+gk(d._i);
+h+='<div class="gc" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'"></div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
+});
+h+='</div>';
+});
+c.innerHTML=h;
+}
+function sd(i){
+var d=D(E[i]);
+var tb=document.getElementById("dtabs");
+var th="";
+E.forEach(function(a,j){
+th+='<div class="d-tab'+(j===i?' act':'')+'" onclick="sd('+j+')">'+a[0]+'</div>';
+});
+tb.innerHTML=th;
+setTimeout(function(){var at=tb.querySelector(".act");if(at)at.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})},50);
+var h='<div class="d-hdr"><h2>'+d.name+'</h2><div class="ds">'+d.intro+'</div></div>';
+h+='<div class="d-lvl"><span class="lb'+(d.gold?'':' n')+'">金卡</span><span class="lb'+(d.plat?'':' n')+'">铂金卡</span><span class="lb'+(d.black?'':' n')+'">黑卡</span></div>';
+h+='<div class="d-img">'+((d.imgD?'<img src="'+d.imgD+'" alt="'+d.name+'">':  '<div class="ph" style="background:'+gk(i)+'">'+d.emoji+'</div>'))+'</div>';
+h+='<div class="d-sec"><div class="d-sec-title">使用说明</div><div class="d-flds">';
+h+='<div class="df"><div class="dl">权益亮点：</div><div class="dv">'+d.hl+'</div></div>';
+h+='<div class="df"><div class="dl">生效规则：</div><div class="dv">'+d.effRule+'</div></div>';
+h+='<div class="df"><div class="dl">生效日期：</div><div class="dv">'+d.effDate+'</div></div>';
+h+='<div class="df"><div class="dl">有效期限：</div><div class="dv">'+d.validity+'</div></div>';
+h+='<div class="df"><div class="dl">获取条件：</div><div class="dv">'+d.obtain+'</div></div>';
+h+='<div class="df"><div class="dl">使用条件：</div><div class="dv">'+d.cond+'</div></div>';
+h+='<div class="df"><div class="dl">使用规则：</div><div class="dv">'+d.rule+'</div></div>';
+h+='<div class="df"><div class="dl">供应商兑换：</div><div class="dv">'+d.supplier+'</div></div>';
+h+='<div class="df"><div class="dl">是否快递：</div><div class="dv">'+d.delivery+'</div></div>';
+h+='</div></div>';
+document.getElementById("dc").innerHTML=h;
+document.getElementById("dp").classList.add("show");
+document.getElementById("dp").scrollTop=0;
+window._ci=i;document.getElementById("genBtn").style.display="block";
+}
+function hd(){document.getElementById("dp").classList.remove("show");document.getElementById("genBtn").style.display="none"}
+function gc(i){
+var dc=document.getElementById('dc');
+document.getElementById('ld').classList.add('show');
+setTimeout(function(){html2canvas(dc,{backgroundColor:'#0a0a0a',scale:2,useCORS:true}).then(function(c){document.getElementById('ld').classList.remove('show');document.getElementById('gi').src=c.toDataURL('image/png');document.getElementById('im').classList.add('show')}).catch(function(){document.getElementById('ld').classList.remove('show');alert('生成失败')})},100);
+}
+function ci(){document.getElementById("im").classList.remove("show")}
+R();
+</script></body></html>
