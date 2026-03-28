@@ -107,7 +107,7 @@ sel.innerHTML='<option value="">请选择权益</option>';
 if(!lv||!LEVEL_BENEFITS[lv]){av.textContent="请先选择 VIP 等级";return}
 var allowed=LEVEL_BENEFITS[lv];
 av.textContent=allowed.join("、");
-["尊享礼遇","私享会","顶奢特权"].forEach(function(tp){
+["私享会","顶奢特权","尊享礼遇"].forEach(function(tp){
 var items=BENEFIT_TYPES[tp].filter(function(b){return allowed.indexOf(b)>=0});
 if(!items.length)return;
 var og=document.createElement("optgroup");og.label=tp;
@@ -119,22 +119,39 @@ sel.appendChild(og);
 document.querySelectorAll('input[name="f_express"]').forEach(function(r){r.addEventListener("change",function(){
 document.getElementById("expressFields").style.display=this.value==="是"?"block":"none";
 })});
+["f_name","f_orgid","f_qty","f_butler"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){this.classList.remove("err")})});
+document.getElementById("f_benefit").addEventListener("change",function(){this.classList.remove("err")});
 
 function getOrders(){return JSON.parse(localStorage.getItem("vip_orders")||"[]")}
 function saveOrders(o){localStorage.setItem("vip_orders",JSON.stringify(o))}
 
 function submit(){
-var name=document.getElementById("f_name").value.trim();
-var orgid=document.getElementById("f_orgid").value.trim();
+var fields=[
+{id:"f_name",val:document.getElementById("f_name").value.trim()},
+{id:"f_orgid",val:document.getElementById("f_orgid").value.trim()},
+{id:"f_level",val:document.getElementById("f_level").value},
+{id:"f_benefit",val:document.getElementById("f_benefit").value},
+{id:"f_qty",val:document.getElementById("f_qty").value},
+{id:"f_butler",val:document.getElementById("f_butler").value.trim()}
+];
+var ok=true;
+fields.forEach(function(f){
+var el=document.getElementById(f.id);
+if(!f.val){el.classList.add("err");ok=false}else{el.classList.remove("err")}
+});
+document.getElementById("lvlErr").style.display=!document.getElementById("f_level").value?"block":"none";
+if(!ok){showToast("请填写必填项");return}
+var name=fields[0].val;
+var orgid=fields[1].val;
 var uid="";
-var level=document.getElementById("f_level").value;
-var benefit=document.getElementById("f_benefit").value;
-var qty=document.getElementById("f_qty").value;
-var butler=document.getElementById("f_butler").value.trim();
+var level=fields[2].val;
+var benefit=fields[3].val;
+var qty=fields[4].val;
+var butler=fields[5].val;
 var result=document.querySelector('input[name="f_result"]:checked').value;
 var note=document.getElementById("f_note").value.trim();
 var express=document.querySelector('input[name="f_express"]:checked').value;
-if(!name||!orgid||!level||!benefit||!butler){showToast("请填写必填项");return}
+var express=document.querySelector('input[name="f_express"]:checked').value;
 var order={id:Date.now(),name:name,orgId:orgid,uid:uid,level:level,benefit:benefit,qty:parseInt(qty)||1,
 butler:butler,butlerResult:result,butlerNote:note,butlerTime:new Date().toLocaleString("zh-CN"),
 needExpress:express,
