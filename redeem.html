@@ -324,4 +324,13 @@ document.body.appendChild(m);
 }
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(function(){t.style.display="none"},2000)}
+
+(function(){
+var params=new URLSearchParams(window.location.search);
+var benefit=params.get("benefit");
+if(benefit){
+st(0);
+document.getElementById("f_benefit").innerHTML='<option value="'+benefit+'" selected>'+benefit+'</option>';
+}
+})();
 </script></body></html>
