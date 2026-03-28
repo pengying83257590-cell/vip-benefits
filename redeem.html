@@ -328,9 +328,27 @@ function showToast(msg){var t=document.getElementById("toast");t.textContent=msg
 (function(){
 var params=new URLSearchParams(window.location.search);
 var benefit=params.get("benefit");
+var delivery=params.get("delivery");
 if(benefit){
 st(0);
 document.getElementById("f_benefit").innerHTML='<option value="'+benefit+'" selected>'+benefit+'</option>';
+}
+if(delivery){
+var radios=document.querySelectorAll('input[name="f_express"]');
+radios.forEach(function(r){
+if(delivery==="是"){
+r.checked=(r.value==="是");
+r.disabled=true;
+}else{
+r.checked=(r.value==="否");
+r.disabled=true;
+}
+});
+if(delivery==="是"){
+document.getElementById("expressFields").style.display="block";
+}else{
+document.getElementById("expressFields").style.display="none";
+}
 }
 })();
 </script></body></html>

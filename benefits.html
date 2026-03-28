@@ -127,7 +127,7 @@ window._ci=i;document.getElementById("genBtn").classList.add("show");
 }
 function goApply(){
 var d=D(E[window._ci]);
-var params="?benefit="+encodeURIComponent(d.name);
+var params="?benefit="+encodeURIComponent(d.name)+"&delivery="+encodeURIComponent(d.delivery);
 window.location.href="redeem.html"+params;
 }
 function hd(){document.getElementById("dp").classList.remove("show");document.getElementById("genBtn").classList.remove("show")}
