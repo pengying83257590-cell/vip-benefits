@@ -156,8 +156,7 @@ var qty=fields[4].val;
 var butler=fields[5].val;
 var result=document.querySelector('input[name="f_result"]:checked').value;
 var note=document.getElementById("f_note").value.trim();
-var express=document.querySelector('input[name="f_express"]:checked').value;
-var express=document.querySelector('input[name="f_express"]:checked').value;
+var express=window._deliveryLocked||document.querySelector('input[name="f_express"]:checked').value;
 var order={id:Date.now(),name:name,orgId:orgid,uid:uid,level:level,benefit:benefit,qty:parseInt(qty)||1,
 butler:butler,butlerResult:result,butlerNote:note,butlerTime:new Date().toLocaleString("zh-CN"),
 needExpress:express,
@@ -334,21 +333,18 @@ st(0);
 document.getElementById("f_benefit").innerHTML='<option value="'+benefit+'" selected>'+benefit+'</option>';
 }
 if(delivery){
+var expressArea=document.querySelector('input[name="f_express"]').closest('.fg');
 var radios=document.querySelectorAll('input[name="f_express"]');
-radios.forEach(function(r){
 if(delivery==="是"){
-r.checked=(r.value==="是");
-r.disabled=true;
-}else{
-r.checked=(r.value==="否");
-r.disabled=true;
-}
-});
-if(delivery==="是"){
+radios.forEach(function(r){r.checked=(r.value==="是")});
+expressArea.innerHTML='<label>是否需要快递</label><div style="padding:10px 0;font-size:14px;color:#C9A96E;font-weight:600">是（该权益需要快递配送）</div><input type="hidden" name="f_express_val" value="是">';
 document.getElementById("expressFields").style.display="block";
 }else{
+radios.forEach(function(r){r.checked=(r.value==="否")});
+expressArea.innerHTML='<label>是否需要快递</label><div style="padding:10px 0;font-size:14px;color:#999">否（该权益无需快递）</div><input type="hidden" name="f_express_val" value="否">';
 document.getElementById("expressFields").style.display="none";
 }
+window._deliveryLocked=delivery;
 }
 })();
 </script></body></html>
