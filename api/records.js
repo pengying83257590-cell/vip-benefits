@@ -1,0 +1,20 @@
+const { getTenantToken, listRecords } = require("./_lib/feishu");
+
+module.exports = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(200).end();
+
+  try {
+    const token = await getTenantToken();
+    const result = await listRecords(token);
+    const items = (result?.data?.items || []).map(item => ({
+      record_id: item.record_id,
+      ...item.fields
+    }));
+    return res.json({ success: true, records: items });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
