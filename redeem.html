@@ -29,7 +29,7 @@
 .dtl-sec{margin:0 16px 16px}.dtl-sec-t{font-size:13px;font-weight:600;color:#C9A96E;margin-bottom:10px}
 .dtl-flds{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
 .dtl-f{padding:12px 16px;border-bottom:1px solid #222;display:flex;align-items:flex-start;gap:8px}.dtl-f:last-child{border-bottom:none}.dtl-f .dl{font-size:12px;color:#C9A96E;flex-shrink:0;white-space:nowrap;line-height:1.6;min-width:80px}.dtl-f .dv{font-size:13px;color:#f0f0f0;line-height:1.6}
-.dtl-actions{position:fixed;bottom:0;left:0;right:0;z-index:110;display:flex;gap:0;padding-bottom:env(safe-area-inset-bottom)}.dtl-actions .btn-reject{flex:1;padding:14px;text-align:center;background:#1a1a1a;color:#e66478;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-reject:active{opacity:.7}.dtl-actions .btn-approve{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-approve:active{opacity:.8}.dtl-actions .btn-single{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-single:active{opacity:.8}
+.dtl-actions{position:fixed;bottom:0;left:0;right:0;z-index:150;display:none;gap:0;background:#0a0a0a;padding-bottom:env(safe-area-inset-bottom)}.dtl-actions.show{display:flex}.dtl-actions .btn-reject{flex:1;padding:14px;text-align:center;background:#1a1a1a;color:#e66478;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-reject:active{opacity:.7}.dtl-actions .btn-approve{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-approve:active{opacity:.8}.dtl-actions .btn-single{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-single:active{opacity:.8}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:flex-end;justify-content:center}.modal-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px 16px 0 0;width:100%;max-width:500px;padding:20px 16px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}.modal-box .modal-title{font-size:16px;font-weight:600;color:#C9A96E;margin-bottom:16px;text-align:center}.modal-box .fg{margin-bottom:14px}.modal-box .fg label{display:block;font-size:12px;color:#999;margin-bottom:5px}.modal-box .fg input,.modal-box .fg textarea{width:100%;background:#0a0a0a;border:1px solid #2a2a2a;color:#f0f0f0;padding:10px 12px;border-radius:10px;font-size:14px;outline:none}.modal-box .fg input:focus,.modal-box .fg textarea:focus{border-color:#C9A96E}.modal-box .modal-btns{display:flex;gap:10px;margin-top:16px}.modal-box .modal-btns button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;border:none;cursor:pointer}.modal-box .modal-cancel{background:#2a2a2a;color:#999}.modal-box .modal-confirm{background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000}
 .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.9);color:#C9A96E;padding:12px 24px;border-radius:10px;font-size:14px;z-index:300;display:none;border:1px solid rgba(201,169,110,.3)}
 select option{background:#1a1a1a}
@@ -76,8 +76,8 @@ select option{background:#1a1a1a}
 <div class="dtl-overlay" id="dtlPanel">
 <div class="dtl-back" onclick="closeDtl()"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>返回</div>
 <div id="dtlContent"></div>
-<div class="dtl-actions" id="dtlActions"></div>
 </div>
+<div class="dtl-actions" id="dtlActions"></div>
 <div class="toast" id="toast"></div>
 <script>
 var BENEFIT_TYPES={
@@ -262,11 +262,12 @@ if(o.status==="shipping"){
 bh+='<button class="btn-single" onclick="confirmDone('+o.id+')">客户已收到VIP权益</button>';
 }
 document.getElementById("dtlActions").innerHTML=bh;
+document.getElementById("dtlActions").classList.toggle("show",bh.length>0);
 document.getElementById("dtlPanel").classList.add("show");
 document.getElementById("dtlPanel").scrollTop=0;
 window._dtlId=id;
 }
-function closeDtl(){document.getElementById("dtlPanel").classList.remove("show")}
+function closeDtl(){document.getElementById("dtlPanel").classList.remove("show");document.getElementById("dtlActions").classList.remove("show")}
 
 function updateOrder(id,fn){
 var orders=getOrders();var o=orders.find(function(x){return x.id===id});
