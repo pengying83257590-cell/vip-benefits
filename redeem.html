@@ -29,7 +29,8 @@
 .dtl-sec{margin:0 16px 16px}.dtl-sec-t{font-size:13px;font-weight:600;color:#C9A96E;margin-bottom:10px}
 .dtl-flds{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
 .dtl-f{padding:12px 16px;border-bottom:1px solid #222;display:flex;align-items:flex-start;gap:8px}.dtl-f:last-child{border-bottom:none}.dtl-f .dl{font-size:12px;color:#C9A96E;flex-shrink:0;white-space:nowrap;line-height:1.6;min-width:80px}.dtl-f .dv{font-size:13px;color:#f0f0f0;line-height:1.6}
-.dtl-actions{padding:16px}.dtl-actions .btn{margin-bottom:10px}
+.dtl-actions{position:fixed;bottom:0;left:0;right:0;z-index:110;display:flex;gap:0;padding-bottom:env(safe-area-inset-bottom)}.dtl-actions .btn-reject{flex:1;padding:14px;text-align:center;background:#1a1a1a;color:#e66478;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-reject:active{opacity:.7}.dtl-actions .btn-approve{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-top:1px solid #2a2a2a;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-approve:active{opacity:.8}.dtl-actions .btn-single{flex:1;padding:14px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;cursor:pointer;letter-spacing:1px}.dtl-actions .btn-single:active{opacity:.8}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:flex-end;justify-content:center}.modal-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px 16px 0 0;width:100%;max-width:500px;padding:20px 16px;padding-bottom:calc(20px + env(safe-area-inset-bottom))}.modal-box .modal-title{font-size:16px;font-weight:600;color:#C9A96E;margin-bottom:16px;text-align:center}.modal-box .fg{margin-bottom:14px}.modal-box .fg label{display:block;font-size:12px;color:#999;margin-bottom:5px}.modal-box .fg input,.modal-box .fg textarea{width:100%;background:#0a0a0a;border:1px solid #2a2a2a;color:#f0f0f0;padding:10px 12px;border-radius:10px;font-size:14px;outline:none}.modal-box .fg input:focus,.modal-box .fg textarea:focus{border-color:#C9A96E}.modal-box .modal-btns{display:flex;gap:10px;margin-top:16px}.modal-box .modal-btns button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;border:none;cursor:pointer}.modal-box .modal-cancel{background:#2a2a2a;color:#999}.modal-box .modal-confirm{background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000}
 .toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.9);color:#C9A96E;padding:12px 24px;border-radius:10px;font-size:14px;z-index:300;display:none;border:1px solid rgba(201,169,110,.3)}
 select option{background:#1a1a1a}
 </style></head><body>
@@ -229,14 +230,14 @@ h+='<div class="dtl-f"><div class="dl">电话：</div><div class="dv">'+(o.recip
 h+='<div class="dtl-f"><div class="dl">地址：</div><div class="dv">'+(o.recipientAddr||"—")+'</div></div>';
 }
 h+='</div></div>';
+if(o.brandResult){
 h+='<div class="dtl-sec"><div class="dtl-sec-t">🏢 品牌复审</div><div class="dtl-flds">';
-h+='<div class="dtl-f"><div class="dl">复审人：</div><div class="dv">'+(o.brandReviewer||"—")+'</div></div>';
-h+='<div class="dtl-f"><div class="dl">复审结果：</div><div class="dv">'+(o.brandResult||"—")+'</div></div>';
-h+='<div class="dtl-f"><div class="dl">复审时间：</div><div class="dv">'+(o.brandTime||"—")+'</div></div>';
-h+='<div class="dtl-f"><div class="dl">需供应商：</div><div class="dv">'+(o.needSupplier||"—")+'</div></div>';
-h+='<div class="dtl-f"><div class="dl">对接供应商：</div><div class="dv">'+(o.supplierTime||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">复审人：</div><div class="dv">'+o.brandReviewer+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">复审结果：</div><div class="dv">'+o.brandResult+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">复审时间：</div><div class="dv">'+o.brandTime+'</div></div>';
 h+='</div></div>';
-if(o.needExpress==="是"){
+}
+if(o.expressCompany||o.expressNo||o.expressTime||o.receiveTime){
 h+='<div class="dtl-sec"><div class="dtl-sec-t">🚚 物流信息</div><div class="dtl-flds">';
 h+='<div class="dtl-f"><div class="dl">快递公司：</div><div class="dv">'+(o.expressCompany||"—")+'</div></div>';
 h+='<div class="dtl-f"><div class="dl">快递单号：</div><div class="dv">'+(o.expressNo||"—")+'</div></div>';
@@ -246,14 +247,17 @@ h+='</div></div>';
 }
 h+='<div class="dtl-actions">';
 if(o.status==="pending"){
-h+='<button class="btn" onclick="brandApprove('+o.id+')">✅ 品牌通过</button>';
-h+='<button class="btn sec-btn" onclick="brandReject('+o.id+')">❌ 品牌驳回</button>';
+h+='<button class="btn-reject" onclick="brandReject('+o.id+')">驳回</button>';
+h+='<button class="btn-approve" onclick="brandApprove('+o.id+')">通过</button>';
 }
-if(o.status==="approved"){
-h+='<button class="btn" onclick="markShipping('+o.id+')">🚚 标记配送中</button>';
+if(o.status==="approved"&&o.needExpress==="是"){
+h+='<button class="btn-single" onclick="markShipping('+o.id+')">标记配送中</button>';
+}
+if(o.status==="approved"&&o.needExpress!=="是"){
+h+='<button class="btn-single" onclick="markDone('+o.id+')">标记已完成</button>';
 }
 if(o.status==="shipping"){
-h+='<button class="btn" onclick="markDone('+o.id+')">✅ 标记已完成</button>';
+h+='<button class="btn-single" onclick="markDone('+o.id+')">标记已完成</button>';
 }
 h+='</div>';
 document.getElementById("dtlContent").innerHTML=h;
@@ -268,9 +272,30 @@ var orders=getOrders();var o=orders.find(function(x){return x.id===id});
 if(o){fn(o);saveOrders(orders);showDtl(id);renderList()}
 }
 function brandApprove(id){
+var orders=getOrders();var o=orders.find(function(x){return x.id===id});if(!o)return;
+if(o.needExpress==="是"){
+var m=document.createElement("div");m.className="modal-overlay";m.id="approveModal";
+m.innerHTML='<div class="modal-box"><div class="modal-title">品牌通过 — 填写物流信息</div>'
++'<div class="fg"><label>品牌复审人 <span style="color:#e66478">*</span></label><input id="m_reviewer" placeholder="复审人姓名"></div>'
++'<div class="fg"><label>快递公司 <span style="color:#e66478">*</span></label><input id="m_company" placeholder="快递公司"></div>'
++'<div class="fg"><label>快递单号 <span style="color:#e66478">*</span></label><input id="m_no" placeholder="快递单号"></div>'
++'<div class="modal-btns"><button class="modal-cancel" onclick="document.getElementById(\'approveModal\').remove()">取消</button>'
++'<button class="modal-confirm" onclick="doApproveWithExpress('+id+')">确认通过</button></div></div>';
+document.body.appendChild(m);
+}else{
 var reviewer=prompt("品牌复审人姓名：");if(!reviewer)return;
 updateOrder(id,function(o){o.status="approved";o.brandReviewer=reviewer;o.brandResult="能兑换";o.brandTime=new Date().toLocaleString("zh-CN")});
-showToast("✅ 品牌已通过");
+showToast("品牌已通过");
+}
+}
+function doApproveWithExpress(id){
+var reviewer=document.getElementById("m_reviewer").value.trim();
+var company=document.getElementById("m_company").value.trim();
+var no=document.getElementById("m_no").value.trim();
+if(!reviewer||!company||!no){showToast("请填写完整信息");return}
+document.getElementById("approveModal").remove();
+updateOrder(id,function(o){o.status="shipping";o.brandReviewer=reviewer;o.brandResult="能兑换";o.brandTime=new Date().toLocaleString("zh-CN");o.expressCompany=company;o.expressNo=no;o.expressTime=new Date().toLocaleString("zh-CN")});
+showToast("品牌已通过，已标记配送中");
 }
 function brandReject(id){
 var reviewer=prompt("品牌复审人姓名：");if(!reviewer)return;
@@ -280,11 +305,11 @@ showToast("已驳回");
 function markShipping(id){
 var company=prompt("快递公司：");var no=prompt("快递单号：");
 updateOrder(id,function(o){o.status="shipping";o.expressCompany=company||"";o.expressNo=no||"";o.expressTime=new Date().toLocaleString("zh-CN")});
-showToast("🚚 已标记配送中");
+showToast("已标记配送中");
 }
 function markDone(id){
 updateOrder(id,function(o){o.status="done";o.receiveTime=new Date().toLocaleString("zh-CN")});
-showToast("✅ 已完成");
+showToast("已完成");
 }
 
 function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(function(){t.style.display="none"},2000)}
