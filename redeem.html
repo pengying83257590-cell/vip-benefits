@@ -8,7 +8,8 @@
 .fg{margin-bottom:14px}.fg label{display:block;font-size:12px;color:#999;margin-bottom:5px}.fg label .req{color:#e66478}
 .fg input,.fg select,.fg textarea{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:10px 12px;border-radius:10px;font-size:14px;outline:none;transition:border .2s}.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#C9A96E}.fg select{height:42px}.fg textarea{min-height:80px;resize:vertical}
 .fg .hint{font-size:11px;color:#555;margin-top:4px}
-.radio-g{display:flex;flex-direction:row;gap:16px;margin-top:6px;flex-wrap:nowrap}.radio-g label{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:#ccc;cursor:pointer;white-space:nowrap}.radio-g input[type=radio]{accent-color:#C9A96E;margin:0}
+.radio-g{display:flex;flex-direction:row;gap:20px;margin-top:8px}.radio-g label{display:flex;align-items:center;gap:4px;font-size:14px;color:#ccc;cursor:pointer}.radio-g input[type=radio]{accent-color:#C9A96E;margin:0;width:16px;height:16px}
+.fg .err{border-color:#e66478 !important}.fg .err-msg{color:#e66478;font-size:11px;margin-top:4px;display:none}
 .btn{display:block;width:100%;padding:13px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-radius:0;cursor:pointer;letter-spacing:1px;margin-top:0}.btn:active{opacity:.8}.btn.sec-btn{background:#1a1a1a;border:1px solid #C9A96E;color:#C9A96E;border-radius:10px}
 .submit-fixed{position:fixed;bottom:0;left:0;right:0;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
 .list-empty{text-align:center;padding:40px 20px;color:#555}.list-empty .ic{font-size:36px;margin-bottom:8px}
@@ -39,7 +40,7 @@ select option{background:#1a1a1a}
 </div>
 <div class="sec"><div class="sec-t">🎁 权益信息</div>
 <div class="fg"><label>可兑换权益</label><div id="f_available" class="hint">请先选择 VIP 等级</div></div>
-<div class="fg"><label>希望兑换的权益 <span class="req">*</span></label><select id="f_benefit"><option value="">请先选择VIP等级</option></select></div>
+<div class="fg"><label>希望兑换的权益 <span class="req">*</span></label><select id="f_benefit" onclick="chkLevel()"><option value="">请先选择VIP等级</option></select><div class="err-msg" id="lvlErr">请先选择 VIP 等级</div></div>
 <div class="fg"><label>兑换数量 <span class="req">*</span></label><input id="f_qty" type="number" min="1" value="1"></div>
 </div>
 <div class="sec"><div class="sec-t">📝 初审信息</div>
@@ -74,7 +75,12 @@ select option{background:#1a1a1a}
 </div>
 <div class="toast" id="toast"></div>
 <script>
-var BENEFITS={
+var BENEFIT_TYPES={
+"尊享礼遇":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位"],
+"私享会":["新火游艇会","新火高尔夫","七爷红酒会","康蒂之夜·李林私享"],
+"顶奢特权":["顶流演唱会门票折扣","豪车礼遇","精英深造","顶级会所会籍推荐","高端社交活动","下一代精英计划"]
+};
+var LEVEL_BENEFITS={
 "黄金卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","顶流演唱会门票折扣","精英深造","顶级会所会籍推荐"],
 "铂金卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","七爷红酒会","顶流演唱会门票折扣","豪车礼遇","精英深造","顶级会所会籍推荐","高端社交活动"],
 "黑卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","七爷红酒会","康蒂之夜·李林私享","顶流演唱会门票折扣","豪车礼遇","精英深造","顶级会所会籍推荐","高端社交活动","下一代精英计划"]
@@ -82,12 +88,32 @@ var BENEFITS={
 var STATUS_MAP={"pending":"待品牌复审","approved":"已通过","rejected":"已驳回","shipping":"配送中","done":"已完成"};
 var curFilter="all";
 
+function chkLevel(){
+var lv=document.getElementById("f_level").value;
+if(!lv){
+document.getElementById("f_level").classList.add("err");
+document.getElementById("lvlErr").style.display="block";
+return false;
+}
+document.getElementById("f_level").classList.remove("err");
+document.getElementById("lvlErr").style.display="none";
+return true;
+}
+
 document.getElementById("f_level").addEventListener("change",function(){
 var lv=this.value;var sel=document.getElementById("f_benefit");var av=document.getElementById("f_available");
+this.classList.remove("err");document.getElementById("lvlErr").style.display="none";
 sel.innerHTML='<option value="">请选择权益</option>';
-if(!lv||!BENEFITS[lv]){av.textContent="请先选择 VIP 等级";return}
-av.textContent=BENEFITS[lv].join("、");
-BENEFITS[lv].forEach(function(b){var o=document.createElement("option");o.value=b;o.textContent=b;sel.appendChild(o)});
+if(!lv||!LEVEL_BENEFITS[lv]){av.textContent="请先选择 VIP 等级";return}
+var allowed=LEVEL_BENEFITS[lv];
+av.textContent=allowed.join("、");
+["尊享礼遇","私享会","顶奢特权"].forEach(function(tp){
+var items=BENEFIT_TYPES[tp].filter(function(b){return allowed.indexOf(b)>=0});
+if(!items.length)return;
+var og=document.createElement("optgroup");og.label=tp;
+items.forEach(function(b){var o=document.createElement("option");o.value=b;o.textContent=b;og.appendChild(o)});
+sel.appendChild(og);
+});
 });
 
 document.querySelectorAll('input[name="f_express"]').forEach(function(r){r.addEventListener("change",function(){
