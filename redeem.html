@@ -1,13 +1,238 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>VIP权益兑换流程</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#f0f0f0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center}
-h1{font-size:20px;color:#D4AF37;margin-bottom:8px}
-p{color:#888;font-size:14px;margin-bottom:24px}
-a{color:#C9A96E;text-decoration:none;font-size:14px;padding:10px 24px;border:1px solid rgba(201,169,110,.3);border-radius:10px}
-a:active{opacity:.7}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#f0f0f0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;padding-bottom:70px}
+.hdr{display:flex;align-items:center;padding:14px 16px;gap:8px}.hdr a{color:#C9A96E;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:4px}.hdr a svg{width:18px;height:18px;fill:#C9A96E}.hdr h1{font-size:17px;color:#D4AF37;font-weight:600}
+.tabs{display:flex;border-bottom:1px solid #222;padding:0 16px}.tab{flex:1;text-align:center;padding:10px 0;font-size:13px;color:#666;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}.tab.act{color:#C9A96E;border-bottom-color:#C9A96E}
+.panel{display:none;padding:16px}.panel.act{display:block}
+.sec{margin-bottom:20px}.sec-t{font-size:14px;font-weight:600;color:#C9A96E;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.fg{margin-bottom:14px}.fg label{display:block;font-size:12px;color:#999;margin-bottom:5px}.fg label .req{color:#e66478}
+.fg input,.fg select,.fg textarea{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:10px 12px;border-radius:10px;font-size:14px;outline:none;transition:border .2s}.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#C9A96E}.fg select{height:42px}.fg textarea{min-height:80px;resize:vertical}
+.fg .hint{font-size:11px;color:#555;margin-top:4px}
+.radio-g{display:flex;gap:10px;margin-top:4px}.radio-g label{display:flex;align-items:center;gap:5px;font-size:13px;color:#ccc;cursor:pointer}.radio-g input[type=radio]{accent-color:#C9A96E}
+.btn{display:block;width:100%;padding:13px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-radius:10px;cursor:pointer;letter-spacing:1px;margin-top:10px}.btn:active{opacity:.8}.btn.sec-btn{background:#1a1a1a;border:1px solid #C9A96E;color:#C9A96E}
+.list-empty{text-align:center;padding:40px 20px;color:#555}.list-empty .ic{font-size:36px;margin-bottom:8px}
+.card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:border .2s}.card:active{border-color:#C9A96E}
+.card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.card .cname{font-size:15px;font-weight:600}.card .badge{font-size:11px;padding:3px 10px;border-radius:10px}
+.badge.pending{background:rgba(230,190,80,.12);color:#e6be50;border:1px solid rgba(230,190,80,.2)}
+.badge.approved{background:rgba(80,200,120,.12);color:#50c878;border:1px solid rgba(80,200,120,.2)}
+.badge.rejected{background:rgba(230,100,120,.12);color:#e66478;border:1px solid rgba(230,100,120,.2)}
+.badge.shipping{background:rgba(80,180,230,.12);color:#50b4e6;border:1px solid rgba(80,180,230,.2)}
+.badge.done{background:rgba(201,169,110,.12);color:#C9A96E;border:1px solid rgba(201,169,110,.2)}
+.card .meta{font-size:12px;color:#888;line-height:1.6}
+.dtl-overlay{position:fixed;inset:0;background:#0a0a0a;z-index:100;overflow-y:auto;transform:translateX(100%);transition:transform .3s;padding:0 0 80px}.dtl-overlay.show{transform:translateX(0)}
+.dtl-back{display:flex;align-items:center;gap:6px;padding:14px 16px;color:#C9A96E;font-size:14px;cursor:pointer}.dtl-back svg{width:18px;height:18px;fill:#C9A96E}
+.dtl-sec{margin:0 16px 16px}.dtl-sec-t{font-size:13px;font-weight:600;color:#C9A96E;margin-bottom:10px}
+.dtl-flds{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden}
+.dtl-f{padding:12px 16px;border-bottom:1px solid #222;display:flex;align-items:flex-start;gap:8px}.dtl-f:last-child{border-bottom:none}.dtl-f .dl{font-size:12px;color:#C9A96E;flex-shrink:0;white-space:nowrap;line-height:1.6;min-width:80px}.dtl-f .dv{font-size:13px;color:#f0f0f0;line-height:1.6}
+.dtl-actions{padding:16px}.dtl-actions .btn{margin-bottom:10px}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.9);color:#C9A96E;padding:12px 24px;border-radius:10px;font-size:14px;z-index:300;display:none;border:1px solid rgba(201,169,110,.3)}
+select option{background:#1a1a1a}
 </style></head><body>
-<h1>VIP 权益兑换流程</h1>
-<p>开发中，敬请期待...</p>
-<a href="index.html">← 返回首页</a>
-</body></html>
+<div class="hdr"><a href="index.html"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></a><h1>VIP 权益兑换流程</h1></div>
+<div class="tabs"><div class="tab act" onclick="st(0)">📋 新建申请</div><div class="tab" onclick="st(1)">📑 申请列表</div></div>
+<div class="panel act" id="p0">
+<div class="sec"><div class="sec-t">👤 客户信息</div>
+<div class="fg"><label>客户名 <span class="req">*</span></label><input id="f_name" placeholder="输入客户姓名"></div>
+<div class="fg"><label>组织 ID <span class="req">*</span></label><input id="f_orgid" placeholder="输入组织ID"></div>
+<div class="fg"><label>UID</label><input id="f_uid" placeholder="输入UID（选填）"></div>
+<div class="fg"><label>VIP 等级 <span class="req">*</span></label><select id="f_level"><option value="">请选择</option><option>黄金卡</option><option>铂金卡</option><option>黑卡</option></select></div>
+</div>
+<div class="sec"><div class="sec-t">🎁 权益信息</div>
+<div class="fg"><label>可兑换权益</label><div id="f_available" class="hint">请先选择 VIP 等级</div></div>
+<div class="fg"><label>希望兑换的权益 <span class="req">*</span></label><select id="f_benefit"><option value="">请先选择VIP等级</option></select></div>
+<div class="fg"><label>兑换数量 <span class="req">*</span></label><input id="f_qty" type="number" min="1" value="1"></div>
+</div>
+<div class="sec"><div class="sec-t">📝 初审信息</div>
+<div class="fg"><label>初审管家 <span class="req">*</span></label><input id="f_butler" placeholder="管家姓名"></div>
+<div class="fg"><label>管家初审结果 <span class="req">*</span></label>
+<div class="radio-g"><label><input type="radio" name="f_result" value="能兑换" checked>能兑换</label><label><input type="radio" name="f_result" value="不能兑换">不能兑换</label></div></div>
+<div class="fg"><label>初审结果备注</label><textarea id="f_note" placeholder="备注说明（选填）"></textarea></div>
+<div class="fg"><label>是否需要快递</label>
+<div class="radio-g"><label><input type="radio" name="f_express" value="是">是</label><label><input type="radio" name="f_express" value="否" checked>否</label></div></div>
+</div>
+<div id="expressFields" style="display:none">
+<div class="sec"><div class="sec-t">📦 收件信息</div>
+<div class="fg"><label>收件人姓名</label><input id="f_rname" placeholder="收件人姓名"></div>
+<div class="fg"><label>联系电话</label><input id="f_rphone" placeholder="联系电话"></div>
+<div class="fg"><label>收件地址</label><textarea id="f_raddr" placeholder="详细收件地址"></textarea></div>
+</div></div>
+<button class="btn" onclick="submit()">提交兑换申请</button>
+</div>
+<div class="panel" id="p1">
+<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+<div class="tab act" onclick="fl('all',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">全部</div>
+<div class="tab" onclick="fl('pending',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">待复审</div>
+<div class="tab" onclick="fl('approved',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">已通过</div>
+<div class="tab" onclick="fl('shipping',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">配送中</div>
+<div class="tab" onclick="fl('done',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">已完成</div>
+</div>
+<div id="listArea"></div>
+</div>
+<div class="dtl-overlay" id="dtlPanel">
+<div class="dtl-back" onclick="closeDtl()"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>返回</div>
+<div id="dtlContent"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var BENEFITS={
+"黄金卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","顶流演唱会门票折扣","精英深造","顶级会所会籍推荐"],
+"铂金卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","七爷红酒会","顶流演唱会门票折扣","豪车礼遇","精英深造","顶级会所会籍推荐","高端社交活动"],
+"黑卡":["VIP定制卡","深度市场洞察","VIP专属礼遇","1V1专属管家","跨资产投资组合","顶级IPO基石份额","数字资产传承","新火OG分享会","新火峰会VIP席位","新火游艇会","新火高尔夫","七爷红酒会","康蒂之夜·李林私享","顶流演唱会门票折扣","豪车礼遇","精英深造","顶级会所会籍推荐","高端社交活动","下一代精英计划"]
+};
+var STATUS_MAP={"pending":"待品牌复审","approved":"已通过","rejected":"已驳回","shipping":"配送中","done":"已完成"};
+var curFilter="all";
+
+document.getElementById("f_level").addEventListener("change",function(){
+var lv=this.value;var sel=document.getElementById("f_benefit");var av=document.getElementById("f_available");
+sel.innerHTML='<option value="">请选择权益</option>';
+if(!lv||!BENEFITS[lv]){av.textContent="请先选择 VIP 等级";return}
+av.textContent=BENEFITS[lv].join("、");
+BENEFITS[lv].forEach(function(b){var o=document.createElement("option");o.value=b;o.textContent=b;sel.appendChild(o)});
+});
+
+document.querySelectorAll('input[name="f_express"]').forEach(function(r){r.addEventListener("change",function(){
+document.getElementById("expressFields").style.display=this.value==="是"?"block":"none";
+})});
+
+function getOrders(){return JSON.parse(localStorage.getItem("vip_orders")||"[]")}
+function saveOrders(o){localStorage.setItem("vip_orders",JSON.stringify(o))}
+
+function submit(){
+var name=document.getElementById("f_name").value.trim();
+var orgid=document.getElementById("f_orgid").value.trim();
+var uid=document.getElementById("f_uid").value.trim();
+var level=document.getElementById("f_level").value;
+var benefit=document.getElementById("f_benefit").value;
+var qty=document.getElementById("f_qty").value;
+var butler=document.getElementById("f_butler").value.trim();
+var result=document.querySelector('input[name="f_result"]:checked').value;
+var note=document.getElementById("f_note").value.trim();
+var express=document.querySelector('input[name="f_express"]:checked').value;
+if(!name||!orgid||!level||!benefit||!butler){showToast("请填写必填项");return}
+var order={id:Date.now(),name:name,orgId:orgid,uid:uid,level:level,benefit:benefit,qty:parseInt(qty)||1,
+butler:butler,butlerResult:result,butlerNote:note,butlerTime:new Date().toLocaleString("zh-CN"),
+needExpress:express,
+recipientName:document.getElementById("f_rname").value.trim(),
+recipientPhone:document.getElementById("f_rphone").value.trim(),
+recipientAddr:document.getElementById("f_raddr").value.trim(),
+status:result==="不能兑换"?"rejected":"pending",
+brandReviewer:"",brandResult:"",brandTime:"",needSupplier:"",supplierTime:"",
+expressCompany:"",expressNo:"",expressTime:"",receiveTime:"",createTime:new Date().toLocaleString("zh-CN")};
+var orders=getOrders();orders.unshift(order);saveOrders(orders);
+showToast("✅ 申请已提交");
+document.getElementById("f_name").value="";document.getElementById("f_orgid").value="";document.getElementById("f_uid").value="";
+document.getElementById("f_level").value="";document.getElementById("f_benefit").innerHTML='<option value="">请先选择VIP等级</option>';
+document.getElementById("f_available").textContent="请先选择 VIP 等级";
+document.getElementById("f_qty").value="1";document.getElementById("f_butler").value="";
+document.getElementById("f_note").value="";document.getElementById("f_rname").value="";
+document.getElementById("f_rphone").value="";document.getElementById("f_raddr").value="";
+st(1);
+}
+
+function st(n){
+document.querySelectorAll(".tabs .tab").forEach(function(t,i){t.classList.toggle("act",i===n)});
+document.querySelectorAll(".panel").forEach(function(p,i){p.classList.toggle("act",i===n)});
+if(n===1)renderList();
+}
+
+function fl(f,el){
+curFilter=f;
+el.parentElement.querySelectorAll(".tab").forEach(function(t){t.classList.remove("act")});
+el.classList.add("act");renderList();
+}
+
+function renderList(){
+var orders=getOrders();
+var filtered=curFilter==="all"?orders:orders.filter(function(o){return o.status===curFilter});
+var area=document.getElementById("listArea");
+if(!filtered.length){area.innerHTML='<div class="list-empty"><div class="ic">📋</div>暂无申请记录</div>';return}
+var h="";filtered.forEach(function(o,i){
+h+='<div class="card" onclick="showDtl('+o.id+')"><div class="top"><span class="cname">'+o.name+' · '+o.benefit+'</span><span class="badge '+o.status+'">'+STATUS_MAP[o.status]+'</span></div><div class="meta">'+o.level+' | 数量：'+o.qty+' | '+o.butler+'<br>'+o.createTime+'</div></div>';
+});
+area.innerHTML=h;
+}
+
+function showDtl(id){
+var orders=getOrders();var o=orders.find(function(x){return x.id===id});if(!o)return;
+var h='<div class="dtl-sec"><div class="dtl-sec-t">👤 客户信息</div><div class="dtl-flds">';
+h+='<div class="dtl-f"><div class="dl">客户名：</div><div class="dv">'+o.name+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">组织 ID：</div><div class="dv">'+o.orgId+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">UID：</div><div class="dv">'+(o.uid||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">VIP 等级：</div><div class="dv">'+o.level+'</div></div>';
+h+='</div></div>';
+h+='<div class="dtl-sec"><div class="dtl-sec-t">🎁 权益信息</div><div class="dtl-flds">';
+h+='<div class="dtl-f"><div class="dl">兑换权益：</div><div class="dv">'+o.benefit+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">兑换数量：</div><div class="dv">'+o.qty+'</div></div>';
+h+='</div></div>';
+h+='<div class="dtl-sec"><div class="dtl-sec-t">📝 管家初审</div><div class="dtl-flds">';
+h+='<div class="dtl-f"><div class="dl">初审管家：</div><div class="dv">'+o.butler+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">初审结果：</div><div class="dv">'+o.butlerResult+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">初审时间：</div><div class="dv">'+o.butlerTime+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">备注：</div><div class="dv">'+(o.butlerNote||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">需要快递：</div><div class="dv">'+o.needExpress+'</div></div>';
+if(o.needExpress==="是"){
+h+='<div class="dtl-f"><div class="dl">收件人：</div><div class="dv">'+(o.recipientName||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">电话：</div><div class="dv">'+(o.recipientPhone||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">地址：</div><div class="dv">'+(o.recipientAddr||"—")+'</div></div>';
+}
+h+='</div></div>';
+h+='<div class="dtl-sec"><div class="dtl-sec-t">🏢 品牌复审</div><div class="dtl-flds">';
+h+='<div class="dtl-f"><div class="dl">复审人：</div><div class="dv">'+(o.brandReviewer||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">复审结果：</div><div class="dv">'+(o.brandResult||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">复审时间：</div><div class="dv">'+(o.brandTime||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">需供应商：</div><div class="dv">'+(o.needSupplier||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">对接供应商：</div><div class="dv">'+(o.supplierTime||"—")+'</div></div>';
+h+='</div></div>';
+if(o.needExpress==="是"){
+h+='<div class="dtl-sec"><div class="dtl-sec-t">🚚 物流信息</div><div class="dtl-flds">';
+h+='<div class="dtl-f"><div class="dl">快递公司：</div><div class="dv">'+(o.expressCompany||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">快递单号：</div><div class="dv">'+(o.expressNo||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">发货时间：</div><div class="dv">'+(o.expressTime||"—")+'</div></div>';
+h+='<div class="dtl-f"><div class="dl">签收时间：</div><div class="dv">'+(o.receiveTime||"—")+'</div></div>';
+h+='</div></div>';
+}
+h+='<div class="dtl-actions">';
+if(o.status==="pending"){
+h+='<button class="btn" onclick="brandApprove('+o.id+')">✅ 品牌通过</button>';
+h+='<button class="btn sec-btn" onclick="brandReject('+o.id+')">❌ 品牌驳回</button>';
+}
+if(o.status==="approved"){
+h+='<button class="btn" onclick="markShipping('+o.id+')">🚚 标记配送中</button>';
+}
+if(o.status==="shipping"){
+h+='<button class="btn" onclick="markDone('+o.id+')">✅ 标记已完成</button>';
+}
+h+='</div>';
+document.getElementById("dtlContent").innerHTML=h;
+document.getElementById("dtlPanel").classList.add("show");
+document.getElementById("dtlPanel").scrollTop=0;
+window._dtlId=id;
+}
+function closeDtl(){document.getElementById("dtlPanel").classList.remove("show")}
+
+function updateOrder(id,fn){
+var orders=getOrders();var o=orders.find(function(x){return x.id===id});
+if(o){fn(o);saveOrders(orders);showDtl(id);renderList()}
+}
+function brandApprove(id){
+var reviewer=prompt("品牌复审人姓名：");if(!reviewer)return;
+updateOrder(id,function(o){o.status="approved";o.brandReviewer=reviewer;o.brandResult="能兑换";o.brandTime=new Date().toLocaleString("zh-CN")});
+showToast("✅ 品牌已通过");
+}
+function brandReject(id){
+var reviewer=prompt("品牌复审人姓名：");if(!reviewer)return;
+updateOrder(id,function(o){o.status="rejected";o.brandReviewer=reviewer;o.brandResult="不能兑换";o.brandTime=new Date().toLocaleString("zh-CN")});
+showToast("已驳回");
+}
+function markShipping(id){
+var company=prompt("快递公司：");var no=prompt("快递单号：");
+updateOrder(id,function(o){o.status="shipping";o.expressCompany=company||"";o.expressNo=no||"";o.expressTime=new Date().toLocaleString("zh-CN")});
+showToast("🚚 已标记配送中");
+}
+function markDone(id){
+updateOrder(id,function(o){o.status="done";o.receiveTime=new Date().toLocaleString("zh-CN")});
+showToast("✅ 已完成");
+}
+
+function showToast(msg){var t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(function(){t.style.display="none"},2000)}
+</script></body></html>
