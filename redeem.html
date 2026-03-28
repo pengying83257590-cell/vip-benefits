@@ -8,8 +8,9 @@
 .fg{margin-bottom:14px}.fg label{display:block;font-size:12px;color:#999;margin-bottom:5px}.fg label .req{color:#e66478}
 .fg input,.fg select,.fg textarea{width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:10px 12px;border-radius:10px;font-size:14px;outline:none;transition:border .2s}.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#C9A96E}.fg select{height:42px}.fg textarea{min-height:80px;resize:vertical}
 .fg .hint{font-size:11px;color:#555;margin-top:4px}
-.radio-g{display:flex;gap:10px;margin-top:4px}.radio-g label{display:flex;align-items:center;gap:5px;font-size:13px;color:#ccc;cursor:pointer}.radio-g input[type=radio]{accent-color:#C9A96E}
-.btn{display:block;width:100%;padding:13px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-radius:10px;cursor:pointer;letter-spacing:1px;margin-top:10px}.btn:active{opacity:.8}.btn.sec-btn{background:#1a1a1a;border:1px solid #C9A96E;color:#C9A96E}
+.radio-g{display:flex;flex-direction:row;gap:16px;margin-top:6px;flex-wrap:nowrap}.radio-g label{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:#ccc;cursor:pointer;white-space:nowrap}.radio-g input[type=radio]{accent-color:#C9A96E;margin:0}
+.btn{display:block;width:100%;padding:13px;text-align:center;background:linear-gradient(135deg,#8B7340,#D4B96A,#C9A96E);color:#000;font-size:15px;font-weight:600;border:none;border-radius:0;cursor:pointer;letter-spacing:1px;margin-top:0}.btn:active{opacity:.8}.btn.sec-btn{background:#1a1a1a;border:1px solid #C9A96E;color:#C9A96E;border-radius:10px}
+.submit-fixed{position:fixed;bottom:0;left:0;right:0;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
 .list-empty{text-align:center;padding:40px 20px;color:#555}.list-empty .ic{font-size:36px;margin-bottom:8px}
 .card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:14px;padding:14px 16px;margin-bottom:12px;cursor:pointer;transition:border .2s}.card:active{border-color:#C9A96E}
 .card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.card .cname{font-size:15px;font-weight:600}.card .badge{font-size:11px;padding:3px 10px;border-radius:10px}
@@ -34,7 +35,6 @@ select option{background:#1a1a1a}
 <div class="sec"><div class="sec-t">👤 客户信息</div>
 <div class="fg"><label>客户名 <span class="req">*</span></label><input id="f_name" placeholder="输入客户姓名"></div>
 <div class="fg"><label>组织 ID <span class="req">*</span></label><input id="f_orgid" placeholder="输入组织ID"></div>
-<div class="fg"><label>UID</label><input id="f_uid" placeholder="输入UID（选填）"></div>
 <div class="fg"><label>VIP 等级 <span class="req">*</span></label><select id="f_level"><option value="">请选择</option><option>黄金卡</option><option>铂金卡</option><option>黑卡</option></select></div>
 </div>
 <div class="sec"><div class="sec-t">🎁 权益信息</div>
@@ -56,8 +56,8 @@ select option{background:#1a1a1a}
 <div class="fg"><label>联系电话</label><input id="f_rphone" placeholder="联系电话"></div>
 <div class="fg"><label>收件地址</label><textarea id="f_raddr" placeholder="详细收件地址"></textarea></div>
 </div></div>
-<button class="btn" onclick="submit()">提交兑换申请</button>
 </div>
+<div class="submit-fixed" id="submitBtn"><button class="btn" onclick="submit()">提交兑换申请</button></div>
 <div class="panel" id="p1">
 <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
 <div class="tab act" onclick="fl('all',this)" style="flex:none;padding:6px 14px;font-size:12px;border-radius:8px;border:1px solid #2a2a2a;background:#1a1a1a;border-bottom:none">全部</div>
@@ -100,7 +100,7 @@ function saveOrders(o){localStorage.setItem("vip_orders",JSON.stringify(o))}
 function submit(){
 var name=document.getElementById("f_name").value.trim();
 var orgid=document.getElementById("f_orgid").value.trim();
-var uid=document.getElementById("f_uid").value.trim();
+var uid="";
 var level=document.getElementById("f_level").value;
 var benefit=document.getElementById("f_benefit").value;
 var qty=document.getElementById("f_qty").value;
@@ -120,7 +120,7 @@ brandReviewer:"",brandResult:"",brandTime:"",needSupplier:"",supplierTime:"",
 expressCompany:"",expressNo:"",expressTime:"",receiveTime:"",createTime:new Date().toLocaleString("zh-CN")};
 var orders=getOrders();orders.unshift(order);saveOrders(orders);
 showToast("✅ 申请已提交");
-document.getElementById("f_name").value="";document.getElementById("f_orgid").value="";document.getElementById("f_uid").value="";
+document.getElementById("f_name").value="";document.getElementById("f_orgid").value="";
 document.getElementById("f_level").value="";document.getElementById("f_benefit").innerHTML='<option value="">请先选择VIP等级</option>';
 document.getElementById("f_available").textContent="请先选择 VIP 等级";
 document.getElementById("f_qty").value="1";document.getElementById("f_butler").value="";
@@ -132,6 +132,7 @@ st(1);
 function st(n){
 document.querySelectorAll(".tabs .tab").forEach(function(t,i){t.classList.toggle("act",i===n)});
 document.querySelectorAll(".panel").forEach(function(p,i){p.classList.toggle("act",i===n)});
+document.getElementById("submitBtn").style.display=n===0?"block":"none";
 if(n===1)renderList();
 }
 
@@ -157,7 +158,6 @@ var orders=getOrders();var o=orders.find(function(x){return x.id===id});if(!o)re
 var h='<div class="dtl-sec"><div class="dtl-sec-t">👤 客户信息</div><div class="dtl-flds">';
 h+='<div class="dtl-f"><div class="dl">客户名：</div><div class="dv">'+o.name+'</div></div>';
 h+='<div class="dtl-f"><div class="dl">组织 ID：</div><div class="dv">'+o.orgId+'</div></div>';
-h+='<div class="dtl-f"><div class="dl">UID：</div><div class="dv">'+(o.uid||"—")+'</div></div>';
 h+='<div class="dtl-f"><div class="dl">VIP 等级：</div><div class="dv">'+o.level+'</div></div>';
 h+='</div></div>';
 h+='<div class="dtl-sec"><div class="dtl-sec-t">🎁 权益信息</div><div class="dtl-flds">';
