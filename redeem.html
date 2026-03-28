@@ -48,7 +48,7 @@ select option{background:#1a1a1a}
 <div class="fg"><label>兑换数量 <span class="req">*</span></label><input id="f_qty" type="number" min="1" value="1"></div>
 </div>
 <div class="sec"><div class="sec-t">📝 初审信息</div>
-<div class="fg"><label>初审管家 <span class="req">*</span></label><input id="f_butler" placeholder="管家姓名"></div>
+<div class="fg"><label>初审管家 <span class="req">*</span></label><select id="f_butler"><option value="">请选择管家</option><option>Nini</option><option>Bea Li</option><option>Yvonne Feng</option><option>Frankie Siu</option><option>Scott</option><option>Austin</option><option>Lillian Li</option><option>Jennie</option><option>Sara</option><option>Ran Xu</option></select></div>
 <div class="fg"><label>管家初审结果 <span class="req">*</span></label>
 <div class="radio-g"><label><input type="radio" name="f_result" value="能兑换" checked>能兑换</label><label><input type="radio" name="f_result" value="不能兑换">不能兑换</label></div></div>
 <div class="fg"><label>初审结果备注</label><textarea id="f_note" placeholder="备注说明（选填）"></textarea></div>
@@ -124,7 +124,8 @@ sel.appendChild(og);
 document.querySelectorAll('input[name="f_express"]').forEach(function(r){r.addEventListener("change",function(){
 document.getElementById("expressFields").style.display=this.value==="是"?"block":"none";
 })});
-["f_name","f_orgid","f_qty","f_butler"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){this.classList.remove("err")})});
+["f_name","f_orgid","f_qty"].forEach(function(id){document.getElementById(id).addEventListener("input",function(){this.classList.remove("err")})});
+document.getElementById("f_butler").addEventListener("change",function(){this.classList.remove("err")});
 document.getElementById("f_benefit").addEventListener("change",function(){this.classList.remove("err")});
 
 function getOrders(){return JSON.parse(localStorage.getItem("vip_orders")||"[]")}
