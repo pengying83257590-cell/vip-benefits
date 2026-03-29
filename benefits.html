@@ -92,7 +92,7 @@ if(!g[tp])return;
 h+='<div class="sec-t">'+tp+'</div><div class="grid">';
 g[tp].forEach(function(d){
 var bgStyle=d.img?'':'background:'+gk(d._i);
-var bgContent=d.img?'<img src="'+d.img+'" alt="'+d.name+'">':'';
+var bgContent=d.img?'<img src="'+d.img+'" alt="'+d.name+'" loading="lazy">':'';
 var shortCls=d.type==='尊享礼遇'?' gc-short':'';
 h+='<div class="gc'+shortCls+'" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'">'+bgContent+'</div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
 });
@@ -111,7 +111,7 @@ tb.innerHTML=th;
 setTimeout(function(){var at=tb.querySelector(".act");if(at)at.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})},50);
 var h='<div class="d-hdr"><h2>'+d.name+'</h2><div class="ds">'+d.intro+'</div></div>';
 h+='<div class="d-lvl"><span class="lb'+(d.gold?'':' n')+'">金卡</span><span class="lb'+(d.plat?'':' n')+'">铂金卡</span><span class="lb'+(d.black?'':' n')+'">黑卡</span></div>';
-h+='<div class="d-img">'+((d.imgD?'<img src="'+d.imgD+'" alt="'+d.name+'">':  '<div class="ph" style="background:'+gk(i)+'">'+d.emoji+'</div>'))+'</div>';
+h+='<div class="d-img">'+((d.imgD?'<img src="'+d.imgD+'" alt="'+d.name+'" loading="lazy">':  '<div class="ph" style="background:'+gk(i)+'">'+d.emoji+'</div>'))+'</div>';
 h+='<div class="d-sec"><div class="d-sec-title">使用说明</div><div class="d-flds">';
 h+='<div class="df"><div class="dl">权益亮点：</div><div class="dv">'+d.hl+'</div></div>';
 h+='<div class="df"><div class="dl">生效规则：</div><div class="dv">'+d.effRule+'</div></div>';
