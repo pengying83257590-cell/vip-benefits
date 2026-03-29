@@ -6,11 +6,16 @@
 .filters{display:flex;gap:6px;padding:0 12px 12px;align-items:center}.filters input,.filters select{background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:8px 10px;border-radius:8px;font-size:13px;outline:none;transition:border .2s;height:38px}.filters input:focus,.filters select:focus{border-color:#C9A96E}.filters input{flex:2;min-width:0}.filters select{flex:1;min-width:0}select option{background:#1a1a1a}
 .sec-t{display:flex;align-items:center;gap:8px;padding:16px 12px 10px;font-size:15px;font-weight:600;color:#C9A96E}.sec-t::before,.sec-t::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.3),transparent)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 12px}
-.gc{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:transform .2s}.gc.gc-short{aspect-ratio:4/1.3}.gc:active{transform:scale(.97)}
+.gc{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:transform .2s}.gc:active{transform:scale(.97)}
 .gc .bg{position:absolute;inset:0;z-index:0;border-radius:12px}
 .gc .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.7) 100%);z-index:1;border-radius:12px}
 .gc .txt{position:relative;z-index:2}.gc .gn{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}.gc .gs{font-size:11px;color:rgba(255,255,255,.7)}
 .gc .emoji-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-65%);font-size:36px;z-index:1;opacity:.9}
+.gc-h{aspect-ratio:auto;flex-direction:row;align-items:center;padding:10px 12px;gap:10px;background:#1a1a1a !important;border:1px solid #2a2a2a}
+.gc-h .gc-icon{width:52px;height:52px;flex-shrink:0;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.gc-h .gc-icon img{width:100%;height:100%;object-fit:contain}
+.gc-h .gc-txt{flex:1;min-width:0}.gc-h .gc-txt .gn{font-size:13px;font-weight:600;color:#f0f0f0;margin-bottom:2px}.gc-h .gc-txt .gs{font-size:11px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc-h .gc-arrow{color:#555;font-size:16px;flex-shrink:0}
 .no-r{text-align:center;padding:50px 20px;color:#555}.no-r .ic{font-size:40px;margin-bottom:10px}
 .dtl{position:fixed;inset:0;background:#0a0a0a;z-index:100;overflow-y:auto;visibility:hidden;opacity:0;transition:opacity .25s,visibility .25s;padding-bottom:60px}.dtl.show{visibility:visible;opacity:1}
 .d-back{position:sticky;top:0;z-index:10;background:#0a0a0a;display:flex;align-items:center;gap:6px;padding:14px 16px;color:#C9A96E;font-size:14px;cursor:pointer}.d-back svg{width:18px;height:18px;fill:#C9A96E}
@@ -47,15 +52,15 @@
 <div class="ld" id="ld">生成中...</div>
 <script>
 var E=[
-["VIP定制卡","可定制专属靓号","尊享礼遇","实体VIP卡片，李林先生亲笔签名","一卡一签，承载远见。李林亲笔签名，见证您的专属席位。","客户找管家登记领取","线上","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"💳","img/benefits/01_vip_card.jpg"],
-["深度市场洞察","洞察市场先机","尊享礼遇","每周获取新火研究院VIP投研报告","每周一份前沿投研，助您洞察先机，稳健布局。","开户成功后定期邮件发送：\n1.新火研判周报/月报\n2.新火专题报告\n3.行业内参","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📊","img/benefits/02_market_insight.jpg"],
-["VIP专属礼遇","专属礼品送不停","尊享礼遇","VIP客户专属欢迎礼包，专属定制生日礼遇","从欢迎礼包到生日惊喜，您的每一个重要时刻，都有新火用心相伴。","开户成功后3个月内邮寄至客户地址","邮寄","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"🎁","img/benefits/03_vip_gift.jpg"],
-["1V1专属管家","7*24h随时响应","尊享礼遇","1v1专属管家开户服务，7*24小时答疑协助","您的专属财富导航员，随时应答您的每一刻所需。","开户成功即拥有专属管家","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"👤","img/benefits/04_butler.jpg"],
-["跨资产投资组合","定制化投资策略","尊享礼遇","从币市到股市再到大宗商品，量身定制投资策略","跨越币市、股市、大宗商品等，定制只属于您的财富方舟。","开户成功即享专属管家定制化投资策略指导一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📈","img/benefits/05_portfolio.jpg"],
-["顶级IPO基石份额","抢滩巨头IPO舱位","尊享礼遇","顶尖金融科技公司新股优先认购权","抢滩未来巨头，坐拥一级市场稀缺舱位。","VIP会员有效期内可参与每一期顶尖项目份额认购，需找管家登记","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🚀","img/benefits/06_ipo.jpg"],
-["数字资产传承","锁定家族财富","尊享礼遇","首创数字资产信托，全方位财富传承与保护方案","首创数字资产信托，为下一代守住这一代的财富","VIP会员有效期内尊享数字资产传承规划一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🏛️","img/benefits/07_trust.jpg"],
-["新火OG分享会","对话传奇大佬","尊享礼遇","特邀行业领袖/OG进行线上独家分享","与行业传奇OG面对面，先人一步捕获Alpha投资密码。","VIP会员有效期内可受邀参加每一期新火OG分享会","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎙️","img/benefits/08_og_sharing.jpg"],
-["新火峰会VIP席位","尊享VIP嘉宾席位","尊享礼遇","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP会员有效期内即可向管家领取VIP门票","线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎫","img/benefits/09_summit.jpg"],
+["VIP定制卡","可定制专属靓号","尊享礼遇","实体VIP卡片，李林先生亲笔签名","一卡一签，承载远见。李林亲笔签名，见证您的专属席位。","客户找管家登记领取","线上","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"💳","img/benefits/01_vip_card.jpg","img/benefits/icons/01_vip_card.png"],
+["深度市场洞察","洞察市场先机","尊享礼遇","每周获取新火研究院VIP投研报告","每周一份前沿投研，助您洞察先机，稳健布局。","开户成功后定期邮件发送：\n1.新火研判周报/月报\n2.新火专题报告\n3.行业内参","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📊","img/benefits/02_market_insight.jpg","img/benefits/icons/02_market_insight.png"],
+["VIP专属礼遇","专属礼品送不停","尊享礼遇","VIP客户专属欢迎礼包，专属定制生日礼遇","从欢迎礼包到生日惊喜，您的每一个重要时刻，都有新火用心相伴。","开户成功后3个月内邮寄至客户地址","邮寄","开户成功","开户成功","开户成功","会员过期即失效","是","是",1,1,1,"🎁","img/benefits/03_vip_gift.jpg","img/benefits/icons/03_vip_gift.png"],
+["1V1专属管家","7*24h随时响应","尊享礼遇","1v1专属管家开户服务，7*24小时答疑协助","您的专属财富导航员，随时应答您的每一刻所需。","开户成功即拥有专属管家","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"👤","img/benefits/04_butler.jpg","img/benefits/icons/04_butler.png"],
+["跨资产投资组合","定制化投资策略","尊享礼遇","从币市到股市再到大宗商品，量身定制投资策略","跨越币市、股市、大宗商品等，定制只属于您的财富方舟。","开户成功即享专属管家定制化投资策略指导一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"📈","img/benefits/05_portfolio.jpg","img/benefits/icons/05_portfolio.png"],
+["顶级IPO基石份额","抢滩巨头IPO舱位","尊享礼遇","顶尖金融科技公司新股优先认购权","抢滩未来巨头，坐拥一级市场稀缺舱位。","VIP会员有效期内可参与每一期顶尖项目份额认购，需找管家登记","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🚀","img/benefits/06_ipo.jpg","img/benefits/icons/06_ipo.png"],
+["数字资产传承","锁定家族财富","尊享礼遇","首创数字资产信托，全方位财富传承与保护方案","首创数字资产信托，为下一代守住这一代的财富","VIP会员有效期内尊享数字资产传承规划一次","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🏛️","img/benefits/07_trust.jpg","img/benefits/icons/07_trust.png"],
+["新火OG分享会","对话传奇大佬","尊享礼遇","特邀行业领袖/OG进行线上独家分享","与行业传奇OG面对面，先人一步捕获Alpha投资密码。","VIP会员有效期内可受邀参加每一期新火OG分享会","线上","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎙️","img/benefits/08_og_sharing.jpg","img/benefits/icons/08_og_sharing.png"],
+["新火峰会VIP席位","尊享VIP嘉宾席位","尊享礼遇","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP专属邀请，尊享新火闭门沙龙及高端行业峰会VIP席位","VIP会员有效期内即可向管家领取VIP门票","线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",1,1,1,"🎫","img/benefits/09_summit.jpg","img/benefits/icons/09_summit.png"],
 ["新火游艇会","乘风破浪，共赴蓝海","私享会","VIP定向邀请线下活动，游艇Party","乘风破浪，亦是谈笑风生。定向邀请，仅限同频者共航。","每年可受邀参加一次游艇会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","是","否",1,1,1,"🛥️","img/benefits/10_yacht.jpg"],
 ["新火高尔夫","挥杆之间，尽在掌握","私享会","VIP定向邀请线下活动，高尔夫运动","以杆会友，以诚致远。新火邀您，在开阔之地，论开阔之事。","每年可受邀参加一次高尔夫活动","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","是","否",1,1,1,"⛳","img/benefits/11_golf.jpg"],
 ["七爷红酒会","七爷相邀，红酒人生","私享会","VIP红酒会，新火科技CEO翁晓奇先生亲临现场","醇酿有价，远见无价。与新火科技CEO共饮，话数字财富新篇章。","每年可受邀参加一次七爷红酒会","仅限香港线下","开户成功","开户成功","开户成功","会员过期即失效","否","否",0,1,1,"🍷","img/benefits/12_wine.jpg"],
@@ -69,7 +74,7 @@ var E=[
 ];
 var GR=["#2a1f0f,#1a1510","#0f1a2a,#101520","#1a0f2a,#151020","#0f2a1a,#102015","#2a0f1a,#201015","#1a2a0f,#152010","#2a1a0f,#201510","#0f2a2a,#102020","#1f0f2a,#151020"];
 function gk(i){var c=GR[i%GR.length].split(",");return"linear-gradient(135deg,"+c[0]+","+c[1]+")"}
-function D(a){return{name:a[0],sub:a[1],type:a[2],intro:a[3],hl:a[4],rule:a[5],cond:a[6],obtain:a[7],effDate:a[8],effRule:a[9],validity:a[10],supplier:a[11],delivery:a[12],gold:a[13],plat:a[14],black:a[15],emoji:a[16],img:a[17]||"",imgD:a[18]||a[17]||""}}
+function D(a){return{name:a[0],sub:a[1],type:a[2],intro:a[3],hl:a[4],rule:a[5],cond:a[6],obtain:a[7],effDate:a[8],effRule:a[9],validity:a[10],supplier:a[11],delivery:a[12],gold:a[13],plat:a[14],black:a[15],emoji:a[16],img:a[17]||"",icon:a[18]||"",imgD:a[17]||""}}
 var sq=document.getElementById("sq"),ft=document.getElementById("ft"),fl=document.getElementById("fl");
 sq.addEventListener("input",R);ft.addEventListener("change",R);fl.addEventListener("change",R);
 function R(){
@@ -88,12 +93,18 @@ var g={};f.forEach(function(d){if(!g[d.type])g[d.type]=[];g[d.type].push(d)});
 var h="";
 ["私享会","顶奢特权","尊享礼遇"].forEach(function(tp){
 if(!g[tp])return;
-h+='<div class="sec-t">'+tp+'</div><div class="grid">';
+h+='<div class="sec-t">'+tp+'</div><div class="grid"'+(tp==='尊享礼遇'?' style="grid-template-columns:1fr"':'')+'>';
 g[tp].forEach(function(d){
-var fit=d.type==='尊享礼遇'?'contain':'cover';
-var bgStyle=d.img?'background-image:url('+d.img+');background-size:'+fit+';background-position:center;background-repeat:no-repeat':'background:'+gk(d._i);
-var shortCls=d.type==='尊享礼遇'?' gc-short':'';
-h+='<div class="gc'+shortCls+'" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'"></div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
+if(d.type==='尊享礼遇'){
+var iconSrc=d.icon||d.img;
+h+='<div class="gc gc-h" onclick="sd('+d._i+')">';
+h+='<div class="gc-icon">'+(iconSrc?'<img src="'+iconSrc+'">':'<span style="font-size:28px">'+d.emoji+'</span>')+'</div>';
+h+='<div class="gc-txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div>';
+h+='<div class="gc-arrow">›</div></div>';
+}else{
+var bgStyle=d.img?'background-image:url('+d.img+');background-size:cover;background-position:center':'background:'+gk(d._i);
+h+='<div class="gc" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'"></div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
+}
 });
 h+='</div>';
 });
@@ -110,7 +121,7 @@ tb.innerHTML=th;
 setTimeout(function(){var at=tb.querySelector(".act");if(at)at.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})},50);
 var h='<div class="d-hdr"><h2>'+d.name+'</h2><div class="ds">'+d.intro+'</div></div>';
 h+='<div class="d-lvl"><span class="lb'+(d.gold?'':' n')+'">金卡</span><span class="lb'+(d.plat?'':' n')+'">铂金卡</span><span class="lb'+(d.black?'':' n')+'">黑卡</span></div>';
-h+='<div class="d-img">'+((d.imgD?'<img src="'+d.imgD+'" alt="'+d.name+'" loading="lazy">':  '<div class="ph" style="background:'+gk(i)+'">'+d.emoji+'</div>'))+'</div>';
+h+='<div class="d-img">'+((d.imgD?'<img src="'+d.imgD+'" alt="'+d.name+'">':  '<div class="ph" style="background:'+gk(i)+'">'+d.emoji+'</div>'))+'</div>';
 h+='<div class="d-sec"><div class="d-sec-title">使用说明</div><div class="d-flds">';
 h+='<div class="df"><div class="dl">权益亮点：</div><div class="dv">'+d.hl+'</div></div>';
 h+='<div class="df"><div class="dl">生效规则：</div><div class="dv">'+d.effRule+'</div></div>';
