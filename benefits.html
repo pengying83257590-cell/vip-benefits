@@ -6,8 +6,9 @@
 .filters{display:flex;gap:6px;padding:0 12px 12px;align-items:center}.filters input,.filters select{background:#1a1a1a;border:1px solid #2a2a2a;color:#f0f0f0;padding:8px 10px;border-radius:8px;font-size:13px;outline:none;transition:border .2s;height:38px}.filters input:focus,.filters select:focus{border-color:#C9A96E}.filters input{flex:2;min-width:0}.filters select{flex:1;min-width:0}select option{background:#1a1a1a}
 .sec-t{display:flex;align-items:center;gap:8px;padding:16px 12px 10px;font-size:15px;font-weight:600;color:#C9A96E}.sec-t::before,.sec-t::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.3),transparent)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 12px}
-.gc{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:transform .2s}.gc:active{transform:scale(.97)}
+.gc{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;transition:transform .2s}.gc.gc-short{aspect-ratio:4/1.3}.gc:active{transform:scale(.97)}
 .gc .bg{position:absolute;inset:0;z-index:0;border-radius:12px}
+.gc .bg img{width:100%;height:100%;object-fit:contain}
 .gc .overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.7) 100%);z-index:1;border-radius:12px}
 .gc .txt{position:relative;z-index:2}.gc .gn{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}.gc .gs{font-size:11px;color:rgba(255,255,255,.7)}
 .gc .emoji-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-65%);font-size:36px;z-index:1;opacity:.9}
@@ -90,8 +91,10 @@ var h="";
 if(!g[tp])return;
 h+='<div class="sec-t">'+tp+'</div><div class="grid">';
 g[tp].forEach(function(d){
-var bgStyle=d.img?'background-image:url('+d.img+');background-size:cover;background-position:center':'background:'+gk(d._i);
-h+='<div class="gc" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'"></div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
+var bgStyle=d.img?'':'background:'+gk(d._i);
+var bgContent=d.img?'<img src="'+d.img+'" alt="'+d.name+'">':'';
+var shortCls=d.type==='尊享礼遇'?' gc-short':'';
+h+='<div class="gc'+shortCls+'" onclick="sd('+d._i+')" style="background:#1a1a1a"><div class="bg" style="'+bgStyle+'">'+bgContent+'</div><div class="overlay"></div>'+(d.img?'':'<div class="emoji-icon">'+d.emoji+'</div>')+'<div class="txt"><div class="gn">'+d.name+'</div><div class="gs">'+d.sub+'</div></div></div>';
 });
 h+='</div>';
 });
