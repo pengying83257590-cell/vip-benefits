@@ -101,8 +101,13 @@ function sd(i){
 var d=D(E[i]);
 var tb=document.getElementById("dtabs");
 var th="";
-E.forEach(function(a,j){
-th+='<div class="d-tab'+(j===i?' act':'')+'" onclick="sd('+j+')">'+a[0]+'</div>';
+var order=["私享会","顶奢特权","尊享礼遇"];
+var sorted=[];
+order.forEach(function(tp){
+E.forEach(function(a,j){if(a[2]===tp)sorted.push(j)});
+});
+sorted.forEach(function(j){
+th+='<div class="d-tab'+(j===i?' act':'')+'" onclick="sd('+j+')">'+E[j][0]+'</div>';
 });
 tb.innerHTML=th;
 setTimeout(function(){var at=tb.querySelector(".act");if(at)at.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})},50);
